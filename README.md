@@ -1,4 +1,4 @@
-# harambee_mobile_app
+# Harambee App
 
 A new Flutter project.
 

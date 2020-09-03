@@ -1,4 +1,4 @@
-package com.example.harambee_mobile_app
+package chingalo.family.harambee_mobile_app
 
 import io.flutter.embedding.android.FlutterActivity
 

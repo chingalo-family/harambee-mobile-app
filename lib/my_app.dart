@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harambee_mobile_app/modules/splash/splash.dart';
 import 'package:provider/provider.dart';
 import 'package:harambee_mobile_app/app_state/app_info_state/app_info_state.dart';
 import 'package:harambee_mobile_app/core/constants/app_constant.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
           ),
           useMaterial3: true,
         ),
-        home: Container(),
+        home: Splash(),
       ),
     );
   }

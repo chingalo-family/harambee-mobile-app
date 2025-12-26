@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:harambee_mobile_app/app_state/app_info_state/app_info_state.dart';
+import 'package:harambee_mobile_app/core/components/circular_process_loader.dart';
+import 'package:harambee_mobile_app/core/constants/app_constant.dart';
 import 'package:harambee_mobile_app/modules/home/home.dart';
 import 'package:provider/provider.dart';
 
@@ -35,6 +37,16 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: Container(
+        color: Theme.of(context).colorScheme.primary,
+        child: const Center(
+          child: CircularProcessLoader(
+            color: AppConstant.defaultColor,
+            size: 3,
+          ),
+        ),
+      ),
+    );
   }
 }

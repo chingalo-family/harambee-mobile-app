@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:harambee_mobile_app/modules/splash/splash.dart';
 import 'package:provider/provider.dart';
 import 'package:harambee_mobile_app/app_state/app_info_state/app_info_state.dart';
+import 'package:harambee_mobile_app/app_state/leaderboard_state/leaderboard_state.dart';
 import 'package:harambee_mobile_app/core/constants/app_constant.dart';
 
 class MyApp extends StatelessWidget {
@@ -9,7 +10,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AppInfoState())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => AppInfoState()),
+        ChangeNotifierProvider(create: (_) => LeaderboardState()),
+      ],
       child: MaterialApp(
         title: 'Harambee Mobile App',
         debugShowCheckedModeBanner: false,

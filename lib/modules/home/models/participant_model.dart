@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harambee_mobile_app/core/utils/format_utils.dart';
 
 enum MedalType { gold, silver, bronze, none }
 
@@ -29,22 +30,7 @@ class ParticipantModel {
   }
 
   String get formattedAmount {
-    return _formatWithThousandsSeparator(amount);
-  }
-
-  String _formatWithThousandsSeparator(double value) {
-    final intValue = value.toInt();
-    final str = intValue.toString();
-    final buffer = StringBuffer();
-    
-    for (int i = 0; i < str.length; i++) {
-      if (i > 0 && (str.length - i) % 3 == 0) {
-        buffer.write(',');
-      }
-      buffer.write(str[i]);
-    }
-    
-    return buffer.toString();
+    return FormatUtils.formatWithThousandsSeparator(amount);
   }
 
   String get displayAmount {

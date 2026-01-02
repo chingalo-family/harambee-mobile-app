@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harambee_mobile_app/core/utils/format_utils.dart';
 import 'package:harambee_mobile_app/modules/home/models/participant_model.dart';
 
 class LeaderboardState extends ChangeNotifier {
@@ -17,27 +18,12 @@ class LeaderboardState extends ChangeNotifier {
   }
 
   String get formattedTotalAmount {
-    return _formatWithThousandsSeparator(totalAmount);
+    return FormatUtils.formatWithThousandsSeparator(totalAmount);
   }
 
   List<ParticipantModel> get topPerformers {
     if (_participants.length < 3) return _participants;
     return _participants.sublist(0, 3);
-  }
-
-  String _formatWithThousandsSeparator(double value) {
-    final intValue = value.toInt();
-    final str = intValue.toString();
-    final buffer = StringBuffer();
-    
-    for (int i = 0; i < str.length; i++) {
-      if (i > 0 && (str.length - i) % 3 == 0) {
-        buffer.write(',');
-      }
-      buffer.write(str[i]);
-    }
-    
-    return buffer.toString();
   }
 
   void toggleJumuhisho() {

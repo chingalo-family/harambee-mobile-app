@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harambee_mobile_app/core/utils/format_utils.dart';
 
 class NumberDisplay extends StatelessWidget {
   final String value;
@@ -7,22 +8,6 @@ class NumberDisplay extends StatelessWidget {
     super.key,
     required this.value,
   });
-
-  String _formatWithThousandsSeparator(String value) {
-    if (value.isEmpty) return '0';
-    
-    final buffer = StringBuffer();
-    final reversed = value.split('').reversed.toList();
-    
-    for (int i = 0; i < reversed.length; i++) {
-      if (i > 0 && i % 3 == 0) {
-        buffer.write(',');
-      }
-      buffer.write(reversed[i]);
-    }
-    
-    return buffer.toString().split('').reversed.join('');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +34,7 @@ class NumberDisplay extends StatelessWidget {
             ),
           ),
           Text(
-            _formatWithThousandsSeparator(value),
+            FormatUtils.formatStringWithThousandsSeparator(value),
             style: const TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,

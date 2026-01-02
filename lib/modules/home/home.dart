@@ -96,31 +96,32 @@ class _HomeState extends State<Home> {
                 ),
               ),
 
-              // Split layout: Top 3 + Rest on left, Number input on right
+              // Split layout: All participants on left, Number input on right
               Expanded(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Left side: Top 3 performers + Rest of leaderboard
+                    // Left side: All participants under Msimamo
                     Expanded(
                       flex: 1,
                       child: Container(
                         color: Colors.white,
                         child: ListView(
                           children: [
-                            // Top 3 performers section (Msimamo)
-                            if (leaderboardState.topPerformers.isNotEmpty) ...[
-                              Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: Text(
-                                  'Msimamo',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.grey.shade800,
-                                  ),
+                            // Msimamo section header
+                            Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Text(
+                                'Msimamo',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey.shade800,
                                 ),
                               ),
+                            ),
+                            // Top 3 performers with medals
+                            if (leaderboardState.topPerformers.isNotEmpty)
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 16),
                                 child: Column(
@@ -134,22 +135,8 @@ class _HomeState extends State<Home> {
                                       .toList(),
                                 ),
                               ),
-                              const SizedBox(height: 24),
-                            ],
-
-                            // Rest of leaderboard (Orodha)
-                            Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: Text(
-                                'Orodha',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.grey.shade800,
-                                ),
-                              ),
-                            ),
-                            // Show participants from rank 4 onwards
+                            const SizedBox(height: 8),
+                            // All remaining participants (rank 4 onwards)
                             ...leaderboardState.participants
                                 .where((p) => p.rank > 3)
                                 .map((participant) => Column(
@@ -210,6 +197,9 @@ class _HomeState extends State<Home> {
                                     Expanded(
                                       child: _NumberButton(
                                         number: '0',
+                                        enabled: leaderboardState.currentInput.isNotEmpty &&
+                                            int.tryParse(leaderboardState.currentInput) != null &&
+                                            int.parse(leaderboardState.currentInput) > 0,
                                         onTap: () => leaderboardState.appendDigit('0'),
                                       ),
                                     ),
@@ -243,6 +233,9 @@ class _HomeState extends State<Home> {
                                     Expanded(
                                       child: _NumberButton(
                                         number: '00',
+                                        enabled: leaderboardState.currentInput.isNotEmpty &&
+                                            int.tryParse(leaderboardState.currentInput) != null &&
+                                            int.parse(leaderboardState.currentInput) > 0,
                                         onTap: () {
                                           leaderboardState.appendDigit('0');
                                           leaderboardState.appendDigit('0');
@@ -279,6 +272,9 @@ class _HomeState extends State<Home> {
                                     Expanded(
                                       child: _NumberButton(
                                         number: '000',
+                                        enabled: leaderboardState.currentInput.isNotEmpty &&
+                                            int.tryParse(leaderboardState.currentInput) != null &&
+                                            int.parse(leaderboardState.currentInput) > 0,
                                         onTap: () {
                                           leaderboardState.appendDigit('0');
                                           leaderboardState.appendDigit('0');
@@ -326,25 +322,27 @@ class _HomeState extends State<Home> {
 class _NumberButton extends StatelessWidget {
   final String number;
   final VoidCallback onTap;
+  final bool enabled;
 
   const _NumberButton({
     required this.number,
     required this.onTap,
+    this.enabled = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: enabled ? Colors.white : Colors.grey.shade200,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
-        onTap: onTap,
+        onTap: enabled ? onTap : null,
         borderRadius: BorderRadius.circular(12),
         child: Container(
           height: 60,
           decoration: BoxDecoration(
             border: Border.all(
-              color: Colors.grey.shade300,
+              color: enabled ? Colors.grey.shade300 : Colors.grey.shade200,
               width: 1,
             ),
             borderRadius: BorderRadius.circular(12),
@@ -352,9 +350,10 @@ class _NumberButton extends StatelessWidget {
           child: Center(
             child: Text(
               number,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
+                color: enabled ? Colors.black : Colors.grey.shade400,
               ),
             ),
           ),

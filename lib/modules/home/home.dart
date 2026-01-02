@@ -96,211 +96,227 @@ class _HomeState extends State<Home> {
                 ),
               ),
 
-              // Scrollable content
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+              // Top performers section
+              if (leaderboardState.topPerformers.isNotEmpty)
+                Container(
+                  color: Colors.white,
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Top performers section
-                      if (leaderboardState.topPerformers.isNotEmpty) ...[
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Text(
-                            'Msimamo',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey.shade800,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Column(
-                            children: leaderboardState.topPerformers
-                                .map((participant) => Padding(
-                                      padding: const EdgeInsets.only(bottom: 8),
-                                      child: TopPerformerCard(
-                                        participant: participant,
-                                      ),
-                                    ))
-                                .toList(),
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-                      ],
-
-                      // Number display
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: NumberDisplay(
-                          value: leaderboardState.currentInput,
+                      Text(
+                        'Msimamo',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey.shade800,
                         ),
                       ),
-                      const SizedBox(height: 16),
-
-                      // Full number keypad (1-9, 0)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                          children: [
-                            // Row 1: 1, 2, 3
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: _NumberButton(
-                                    number: '1',
-                                    onTap: () => leaderboardState.appendDigit('1'),
+                      const SizedBox(height: 12),
+                      Column(
+                        children: leaderboardState.topPerformers
+                            .map((participant) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: TopPerformerCard(
+                                    participant: participant,
                                   ),
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: _NumberButton(
-                                    number: '2',
-                                    onTap: () => leaderboardState.appendDigit('2'),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: _NumberButton(
-                                    number: '3',
-                                    onTap: () => leaderboardState.appendDigit('3'),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            // Row 2: 4, 5, 6
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: _NumberButton(
-                                    number: '4',
-                                    onTap: () => leaderboardState.appendDigit('4'),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: _NumberButton(
-                                    number: '5',
-                                    onTap: () => leaderboardState.appendDigit('5'),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: _NumberButton(
-                                    number: '6',
-                                    onTap: () => leaderboardState.appendDigit('6'),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            // Row 3: 7, 8, 9
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: _NumberButton(
-                                    number: '7',
-                                    onTap: () => leaderboardState.appendDigit('7'),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: _NumberButton(
-                                    number: '8',
-                                    onTap: () => leaderboardState.appendDigit('8'),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: _NumberButton(
-                                    number: '9',
-                                    onTap: () => leaderboardState.appendDigit('9'),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            // Row 4: 0 (centered)
-                            Row(
-                              children: [
-                                const Expanded(child: SizedBox()),
-                                Expanded(
-                                  child: _NumberButton(
-                                    number: '0',
-                                    onTap: () => leaderboardState.appendDigit('0'),
-                                  ),
-                                ),
-                                const Expanded(child: SizedBox()),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-
-                      // Leaderboard list
-                      Container(
-                        color: Colors.white,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'Orodha',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.grey.shade800,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            ...leaderboardState.participants.map(
-                              (participant) => Column(
-                                children: [
-                                  LeaderboardItem(participant: participant),
-                                  if (participant != leaderboardState.participants.last)
-                                    Divider(
-                                      height: 1,
-                                      color: Colors.grey.shade200,
-                                    ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                                ))
+                            .toList(),
                       ),
                     ],
                   ),
                 ),
-              ),
 
-              // Action buttons
-              Container(
-                color: Colors.white,
-                padding: const EdgeInsets.all(16),
-                child: ActionButtons(
-                  onUndo: () => leaderboardState.deleteLastDigit(),
-                  onClear: () => leaderboardState.clearInput(),
-                  onAdd: () {
-                    if (leaderboardState.currentInput.isNotEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Mchango umeongezwa!'),
-                          duration: Duration(seconds: 2),
+              // Split layout: Leaderboard on left, Number input on right
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Left side: Leaderboard list
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        color: Colors.white,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Text(
+                                'Orodha',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey.shade800,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: ListView.separated(
+                                itemCount: leaderboardState.participants.length,
+                                separatorBuilder: (context, index) => Divider(
+                                  height: 1,
+                                  color: Colors.grey.shade200,
+                                ),
+                                itemBuilder: (context, index) {
+                                  return LeaderboardItem(
+                                    participant: leaderboardState.participants[index],
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                      );
-                      leaderboardState.addContribution();
-                    }
-                  },
+                      ),
+                    ),
+
+                    // Right side: Number input area
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        color: Colors.grey.shade50,
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          children: [
+                            // Number display
+                            NumberDisplay(
+                              value: leaderboardState.currentInput,
+                            ),
+                            const SizedBox(height: 16),
+
+                            // Number keypad with 0, 00, 000
+                            Column(
+                              children: [
+                                // Row 1: 1, 2, 3, 0
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: _NumberButton(
+                                        number: '1',
+                                        onTap: () => leaderboardState.appendDigit('1'),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: _NumberButton(
+                                        number: '2',
+                                        onTap: () => leaderboardState.appendDigit('2'),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: _NumberButton(
+                                        number: '3',
+                                        onTap: () => leaderboardState.appendDigit('3'),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: _NumberButton(
+                                        number: '0',
+                                        onTap: () => leaderboardState.appendDigit('0'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                // Row 2: 4, 5, 6, 00
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: _NumberButton(
+                                        number: '4',
+                                        onTap: () => leaderboardState.appendDigit('4'),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: _NumberButton(
+                                        number: '5',
+                                        onTap: () => leaderboardState.appendDigit('5'),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: _NumberButton(
+                                        number: '6',
+                                        onTap: () => leaderboardState.appendDigit('6'),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: _NumberButton(
+                                        number: '00',
+                                        onTap: () {
+                                          leaderboardState.appendDigit('0');
+                                          leaderboardState.appendDigit('0');
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                // Row 3: 7, 8, 9, 000
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: _NumberButton(
+                                        number: '7',
+                                        onTap: () => leaderboardState.appendDigit('7'),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: _NumberButton(
+                                        number: '8',
+                                        onTap: () => leaderboardState.appendDigit('8'),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: _NumberButton(
+                                        number: '9',
+                                        onTap: () => leaderboardState.appendDigit('9'),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: _NumberButton(
+                                        number: '000',
+                                        onTap: () {
+                                          leaderboardState.appendDigit('0');
+                                          leaderboardState.appendDigit('0');
+                                          leaderboardState.appendDigit('0');
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+
+                            // Action buttons
+                            ActionButtons(
+                              onUndo: () => leaderboardState.deleteLastDigit(),
+                              onClear: () => leaderboardState.clearInput(),
+                              onAdd: () {
+                                if (leaderboardState.currentInput.isNotEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Mchango umeongezwa!'),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                  leaderboardState.addContribution();
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

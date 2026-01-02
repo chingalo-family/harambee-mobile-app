@@ -3,7 +3,6 @@ import 'package:harambee_mobile_app/app_state/leaderboard_state/leaderboard_stat
 import 'package:harambee_mobile_app/modules/home/components/action_buttons.dart';
 import 'package:harambee_mobile_app/modules/home/components/leaderboard_item.dart';
 import 'package:harambee_mobile_app/modules/home/components/number_display.dart';
-import 'package:harambee_mobile_app/modules/home/components/top_performer_card.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -120,34 +119,17 @@ class _HomeState extends State<Home> {
                                 ),
                               ),
                             ),
-                            // Top 3 performers with medals
-                            if (leaderboardState.topPerformers.isNotEmpty)
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
-                                child: Column(
-                                  children: leaderboardState.topPerformers
-                                      .map((participant) => Padding(
-                                            padding: const EdgeInsets.only(bottom: 8),
-                                            child: TopPerformerCard(
-                                              participant: participant,
-                                            ),
-                                          ))
-                                      .toList(),
-                                ),
-                              ),
-                            const SizedBox(height: 8),
-                            // All remaining participants (rank 4 onwards)
-                            ...leaderboardState.participants
-                                .where((p) => p.rank > 3)
-                                .map((participant) => Column(
-                                      children: [
-                                        LeaderboardItem(participant: participant),
-                                        Divider(
-                                          height: 1,
-                                          color: Colors.grey.shade200,
-                                        ),
-                                      ],
-                                    )),
+                            // All participants in same style
+                            ...leaderboardState.participants.map((participant) => Column(
+                                  children: [
+                                    LeaderboardItem(participant: participant),
+                                    if (participant != leaderboardState.participants.last)
+                                      Divider(
+                                        height: 1,
+                                        color: Colors.grey.shade200,
+                                      ),
+                                  ],
+                                )),
                           ],
                         ),
                       ),

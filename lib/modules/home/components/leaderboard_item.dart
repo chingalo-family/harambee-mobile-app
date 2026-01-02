@@ -19,23 +19,8 @@ class LeaderboardItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
           children: [
-            Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: Text(
-                  '${participant.rank}',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
+            // Show trophy with rank number for top 3, circular badge for others
+            _buildRankIndicator(),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
@@ -55,6 +40,64 @@ class LeaderboardItem extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRankIndicator() {
+    // For top 3, show trophy with colored background and rank number
+    if (participant.rank <= 3) {
+      return Container(
+        width: 32,
+        height: 32,
+        decoration: BoxDecoration(
+          color: ParticipantModel.getMedalColor(participant.medalType),
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Icon(
+              Icons.emoji_events,
+              color: Colors.white.withOpacity(0.4),
+              size: 24,
+            ),
+            Text(
+              '${participant.rank}',
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w900,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+    
+    // For others, show simple circular rank badge
+    return Container(
+      width: 32,
+      height: 32,
+      decoration: BoxDecoration(
+        color: Colors.grey.shade200,
+        shape: BoxShape.circle,
+      ),
+      child: Center(
+        child: Text(
+          '${participant.rank}',
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );

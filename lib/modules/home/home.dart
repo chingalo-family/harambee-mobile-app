@@ -142,37 +142,101 @@ class _HomeState extends State<Home> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Simulated number grid (7, 8, 9, 0)
+                      // Full number keypad (1-9, 0)
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
+                        child: Column(
                           children: [
-                            Expanded(
-                              child: _NumberButton(
-                                number: '7',
-                                onTap: () => leaderboardState.appendDigit('7'),
-                              ),
+                            // Row 1: 1, 2, 3
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: _NumberButton(
+                                    number: '1',
+                                    onTap: () => leaderboardState.appendDigit('1'),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: _NumberButton(
+                                    number: '2',
+                                    onTap: () => leaderboardState.appendDigit('2'),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: _NumberButton(
+                                    number: '3',
+                                    onTap: () => leaderboardState.appendDigit('3'),
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: _NumberButton(
-                                number: '8',
-                                onTap: () => leaderboardState.appendDigit('8'),
-                              ),
+                            const SizedBox(height: 8),
+                            // Row 2: 4, 5, 6
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: _NumberButton(
+                                    number: '4',
+                                    onTap: () => leaderboardState.appendDigit('4'),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: _NumberButton(
+                                    number: '5',
+                                    onTap: () => leaderboardState.appendDigit('5'),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: _NumberButton(
+                                    number: '6',
+                                    onTap: () => leaderboardState.appendDigit('6'),
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: _NumberButton(
-                                number: '9',
-                                onTap: () => leaderboardState.appendDigit('9'),
-                              ),
+                            const SizedBox(height: 8),
+                            // Row 3: 7, 8, 9
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: _NumberButton(
+                                    number: '7',
+                                    onTap: () => leaderboardState.appendDigit('7'),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: _NumberButton(
+                                    number: '8',
+                                    onTap: () => leaderboardState.appendDigit('8'),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: _NumberButton(
+                                    number: '9',
+                                    onTap: () => leaderboardState.appendDigit('9'),
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: _NumberButton(
-                                number: '0',
-                                onTap: () => leaderboardState.appendDigit('0'),
-                              ),
+                            const SizedBox(height: 8),
+                            // Row 4: 0 (centered)
+                            Row(
+                              children: [
+                                const Expanded(child: SizedBox()),
+                                Expanded(
+                                  child: _NumberButton(
+                                    number: '0',
+                                    onTap: () => leaderboardState.appendDigit('0'),
+                                  ),
+                                ),
+                                const Expanded(child: SizedBox()),
+                              ],
                             ),
                           ],
                         ),

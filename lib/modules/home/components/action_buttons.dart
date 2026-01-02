@@ -91,6 +91,11 @@ class _ActionButton extends StatelessWidget {
                     Colors.white,
                     BlendMode.srcIn,
                   ),
+                  placeholderBuilder: (context) => const Icon(
+                    Icons.error_outline,
+                    color: Colors.white,
+                    size: 20,
+                  ),
                 ),
               const SizedBox(width: 8),
               Text(

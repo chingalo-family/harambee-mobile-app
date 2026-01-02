@@ -21,8 +21,9 @@ class FormatUtils {
   static String formatStringWithThousandsSeparator(String value) {
     if (value.isEmpty) return '0';
     
-    final buffer = StringBuffer();
+    // Build formatted string by reversing, adding commas, then reversing again
     final reversed = value.split('').reversed.toList();
+    final buffer = StringBuffer();
     
     for (int i = 0; i < reversed.length; i++) {
       if (i > 0 && i % 3 == 0) {

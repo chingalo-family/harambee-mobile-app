@@ -96,50 +96,48 @@ class _HomeState extends State<Home> {
                 ),
               ),
 
-              // Top performers section
-              if (leaderboardState.topPerformers.isNotEmpty)
-                Container(
-                  color: Colors.white,
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Msimamo',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.grey.shade800,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Column(
-                        children: leaderboardState.topPerformers
-                            .map((participant) => Padding(
-                                  padding: const EdgeInsets.only(bottom: 8),
-                                  child: TopPerformerCard(
-                                    participant: participant,
-                                  ),
-                                ))
-                            .toList(),
-                      ),
-                    ],
-                  ),
-                ),
-
-              // Split layout: Leaderboard on left, Number input on right
+              // Split layout: Top 3 + Rest on left, Number input on right
               Expanded(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Left side: Leaderboard list
+                    // Left side: Top 3 performers + Rest of leaderboard
                     Expanded(
                       flex: 1,
                       child: Container(
                         color: Colors.white,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: ListView(
                           children: [
+                            // Top 3 performers section (Msimamo)
+                            if (leaderboardState.topPerformers.isNotEmpty) ...[
+                              Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: Text(
+                                  'Msimamo',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey.shade800,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                child: Column(
+                                  children: leaderboardState.topPerformers
+                                      .map((participant) => Padding(
+                                            padding: const EdgeInsets.only(bottom: 8),
+                                            child: TopPerformerCard(
+                                              participant: participant,
+                                            ),
+                                          ))
+                                      .toList(),
+                                ),
+                              ),
+                              const SizedBox(height: 24),
+                            ],
+
+                            // Rest of leaderboard (Orodha)
                             Padding(
                               padding: const EdgeInsets.all(16),
                               child: Text(
@@ -151,20 +149,18 @@ class _HomeState extends State<Home> {
                                 ),
                               ),
                             ),
-                            Expanded(
-                              child: ListView.separated(
-                                itemCount: leaderboardState.participants.length,
-                                separatorBuilder: (context, index) => Divider(
-                                  height: 1,
-                                  color: Colors.grey.shade200,
-                                ),
-                                itemBuilder: (context, index) {
-                                  return LeaderboardItem(
-                                    participant: leaderboardState.participants[index],
-                                  );
-                                },
-                              ),
-                            ),
+                            // Show participants from rank 4 onwards
+                            ...leaderboardState.participants
+                                .where((p) => p.rank > 3)
+                                .map((participant) => Column(
+                                      children: [
+                                        LeaderboardItem(participant: participant),
+                                        Divider(
+                                          height: 1,
+                                          color: Colors.grey.shade200,
+                                        ),
+                                      ],
+                                    )),
                           ],
                         ),
                       ),
